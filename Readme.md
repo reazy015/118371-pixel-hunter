@@ -1,7 +1,7 @@
 # Личный проект «Пиксель хантер» [![Build status][travis-image]][travis-url]
 
 * Студент: [Владимир Хребтов](https://up.htmlacademy.ru/ecmascript/4/user/118371).
-* Наставник: `Неизвестно`.
+* Наставник: [Владимир Хребтов](https://htmlacademy.ru/profile/id91821).
 
 ---
 
