@@ -1,7 +1,6 @@
 const screensList = document.querySelectorAll(`template`);
 const mainScreen = document.querySelector(`main.central`);
 const keyCodes = {
-  altKey: 18,
   arrowLeft: 37,
   arrowRight: 39
 };
