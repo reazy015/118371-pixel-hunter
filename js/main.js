@@ -1,37 +1,11 @@
-const screensList = document.querySelectorAll(`template`);
-const mainScreen = document.querySelector(`main.central`);
-const keyCodes = {
-  arrowLeft: 37,
-  arrowRight: 39
-};
-let screenIndex = 0;
+import showScreen from './showScreen.js';
+import introScreen from './introModule.js';
+import greetingScreen from './greetingModule.js';
+import rulesScreen from './rulesModule.js';
+import game1 from './game1Module.js';
+import game2 from './game2Module.js';
+import game3 from './game3Module.js';
+import stats from './statsModule.js';
 
-const getScreen = (index) => screensList[index].content.cloneNode(true);
-const showScreen = (screen) => {
-  while (mainScreen.firstElementChild) {
-    mainScreen.removeChild(mainScreen.firstElementChild);
-  }
-  mainScreen.append(screen);
-};
-const screenKeyHandler = (evt) => {
-  if (evt.altKey && evt.keyCode === keyCodes.arrowLeft) {
-    screenIndex--;
-    if (screenIndex >= 0) {
-      showScreen(getScreen(screenIndex));
-    } else {
-      screenIndex++;
-    }
-  }
+showScreen(introScreen);
 
-  if (evt.altKey && evt.keyCode === keyCodes.arrowRight) {
-    screenIndex++;
-    if (screenIndex < screensList.length) {
-      showScreen(getScreen(screenIndex));
-    } else {
-      screenIndex--;
-    }
-  }
-};
-
-showScreen(getScreen(screenIndex));
-document.addEventListener(`keydown`, screenKeyHandler);
