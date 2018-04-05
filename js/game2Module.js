@@ -1,4 +1,6 @@
 import getElementFromTemplate from './domConstructor';
+import showScreen from './showScreen.js';
+import thirdGamesScreen from './game3Module.js';
 
 const game2 = getElementFromTemplate(`
     <header class="header">
@@ -56,5 +58,11 @@ const game2 = getElementFromTemplate(`
     </div>
   </footer>
 `);
+const checkRadioBtnsCheckStatus = () => {
+    [...document.querySelectorAll(`input[type="radio"]`)].some( x => { return x.checked === true }) ? showScreen(thirdGamesScreen) : showScreen(null);
+}
+
+[...game2.querySelectorAll(`input[type="radio"]`)].forEach( x => x.addEventListener('click', checkRadioBtnsCheckStatus))
+
 
 export default game2;
