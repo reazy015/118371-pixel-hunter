@@ -1,4 +1,7 @@
 import getElementFromTemplate from './domConstructor';
+import showScreen from './showScreen';
+import returnToMainScreen from './returnToMainScreen';
+import statsScreen from './statsModule';
 
 const game3 = getElementFromTemplate(`
     <header class="header">
@@ -54,5 +57,14 @@ const game3 = getElementFromTemplate(`
     </div>
   </footer>
 `);
+const backToMainScreenBtn = game3.querySelector('.back');
+const gameContent = game3.querySelector('.game__content');
+
+const checkSwitchedGameOption = (evt) => {
+    evt.target.classList.contains(`game__option`) ? showScreen(statsScreen) : showScreen;
+}
+
+gameContent.addEventListener(`click`, checkSwitchedGameOption);
+backToMainScreenBtn.addEventListener(`click`, returnToMainScreen);
 
 export default game3;

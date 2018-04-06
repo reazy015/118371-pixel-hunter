@@ -1,4 +1,5 @@
 import getElementFromTemaplate from './domConstructor.js';
+import returnToMainScreen from './returnToMainScreen';
 
 const stats = getElementFromTemaplate(`
     <header class="header">
@@ -120,5 +121,8 @@ const stats = getElementFromTemaplate(`
     </div>
   </footer>
 `);
+const backToMainScreenBtn = stats.querySelector('.back');
+
+backToMainScreenBtn.addEventListener(`click`, returnToMainScreen);
 
 export default stats;

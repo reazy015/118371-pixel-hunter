@@ -1,13 +1,11 @@
 const mainScreen = document.querySelector(`main.central`);
 
-const showScreen = (screen) => {
+const showScreen = (screen = null) => {
   if (!screen) {
     return;
   }
 
-  while (mainScreen.firstElementChild) {
-    mainScreen.removeChild(mainScreen.firstElementChild);
-  }
+  mainScreen.innerHTML = ``;
   mainScreen.appendChild(screen);
 };
 

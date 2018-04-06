@@ -1,5 +1,6 @@
 import getElementFromTemplate from './domConstructor.js';
 import showScreen from './showScreen.js';
+import returnToMainScreen from './returnToMainScreen';
 import firstGamesScreen from './game1Module.js';
 
 const rulesScreen = getElementFromTemplate(`
@@ -41,6 +42,7 @@ const rulesScreen = getElementFromTemplate(`
 
 const rulesBtn = rulesScreen.querySelector('.rules__button');
 const rulesInput = rulesScreen.querySelector('.rules__input');
+const backToMainScreenBtn = rulesScreen.querySelector('.back');
 
 rulesInput.addEventListener(`input`, function (evt) {
     evt.target.value ? rulesBtn.disabled = false : rulesBtn.disabled = true;
@@ -48,6 +50,8 @@ rulesInput.addEventListener(`input`, function (evt) {
 
 rulesBtn.addEventListener(`click`, function () {
     showScreen(firstGamesScreen);
-})
+});
+
+backToMainScreenBtn.addEventListener(`click`, returnToMainScreen);
 
 export default rulesScreen;

@@ -1,7 +1,7 @@
 function getElementFromTemplate(stringTemplate) {
-  let result = document.createElement('template');
+  let result = document.createElement('div');
   result.innerHTML = stringTemplate;
-  return result.content.cloneNode(true);
+  return result;
 }
 
 export default getElementFromTemplate;
