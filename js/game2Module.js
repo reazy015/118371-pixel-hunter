@@ -60,13 +60,21 @@ const game2 = getElementFromTemplate(`
   </footer>
 `);
 const backToMainScreenBtn = game2.querySelector(`.back`);
+const radioBtnsList = game2.querySelectorAll(`input[type="radio"]`);
 
 const checkRadioBtnsCheckStatus = () => {
-  [...document.querySelectorAll(`input[type="radio"]`)].some( x => { return x.checked === true }) ? showScreen(thirdGamesScreen) : showScreen(null);
+  let questionRadioBtn = game2.querySelector(`input[name="question1"]`);
+
+  if (questionRadioBtn) {
+    showScreen(thirdGamesScreen);
+  } else {
+    showScreen();
+  }
 };
 
-[...game2.querySelectorAll(`input[type="radio"]`)].forEach( x => x.addEventListener('click', checkRadioBtnsCheckStatus))
-
 backToMainScreenBtn.addEventListener(`click`, returnToMainScreen);
+for (let i = 0; i < radioBtnsList.length; i++) {
+  radioBtnsList[i].addEventListener(`click`, checkRadioBtnsCheckStatus);
+}
 
 export default game2;
