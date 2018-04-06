@@ -73,7 +73,7 @@ const game1 = getElementFromTemplate(`
 `);
 
 const backToMainScreenBtn = game1.querySelector(`.back`);
-const radioBtnsList = game1.querySelectorAll(`input[type="radio"]`);
+const gameForm = game1.querySelector(`.game__content`);
 
 const checkRadioBtnsCheckStatus = () => {
   let answers = game1.querySelectorAll(`input[type="radio"]:checked`);
@@ -85,9 +85,16 @@ const checkRadioBtnsCheckStatus = () => {
   }
 };
 
+const detectRadioButtonChange = (evt) => {
+  let target = evt.target;
+  if (target.tagName === `INPUT`) {
+    checkRadioBtnsCheckStatus();
+  } else {
+    return;
+  }
+};
+
 backToMainScreenBtn.addEventListener(`click`, returnToMainScreen);
-for (let i = 0; i < radioBtnsList.length; i++) {
-  radioBtnsList[i].addEventListener(`click`, checkRadioBtnsCheckStatus);
-}
+gameForm.addEventListener(`.container-flex--header`, detectRadioButtonChange);
 
 export default game1;
