@@ -23,7 +23,7 @@ const introScreen = getElementFromTemplate(`
 const startBtn = introScreen.querySelector(`.intro__asterisk`);
 
 startBtn.addEventListener(`click`, function () {
-    showScreen(greetingScreen);
-})
+  showScreen(greetingScreen);
+});
 
 export default introScreen;

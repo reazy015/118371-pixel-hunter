@@ -27,10 +27,10 @@ const greetingScreen = getElementFromTemplate(`
     </div>
   </footer>
 `);
-const continueBtn = greetingScreen.querySelector('.greeting__continue');
+const continueBtn = greetingScreen.querySelector(`.greeting__continue`);
 
 continueBtn.addEventListener(`click`, function () {
-    showScreen(rulesScreen);
-})
+  showScreen(rulesScreen);
+});
 
 export default greetingScreen;

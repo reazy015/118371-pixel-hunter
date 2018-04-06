@@ -57,12 +57,16 @@ const game3 = getElementFromTemplate(`
     </div>
   </footer>
 `);
-const backToMainScreenBtn = game3.querySelector('.back');
-const gameContent = game3.querySelector('.game__content');
+const backToMainScreenBtn = game3.querySelector(`.back`);
+const gameContent = game3.querySelector(`.game__content`);
 
 const checkSwitchedGameOption = (evt) => {
-    evt.target.classList.contains(`game__option`) ? showScreen(statsScreen) : showScreen;
-}
+  if (evt.target.classList.contains(`game__option`)) {
+    showScreen(statsScreen);
+  } else {
+    showScreen();
+  }
+};
 
 gameContent.addEventListener(`click`, checkSwitchedGameOption);
 backToMainScreenBtn.addEventListener(`click`, returnToMainScreen);

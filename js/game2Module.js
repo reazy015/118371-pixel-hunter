@@ -62,8 +62,8 @@ const game2 = getElementFromTemplate(`
 const backToMainScreenBtn = game2.querySelector(`.back`);
 
 const checkRadioBtnsCheckStatus = () => {
-    [...document.querySelectorAll(`input[type="radio"]`)].some( x => { return x.checked === true }) ? showScreen(thirdGamesScreen) : showScreen(null);
-}
+  [...document.querySelectorAll(`input[type="radio"]`)].some( x => { return x.checked === true }) ? showScreen(thirdGamesScreen) : showScreen(null);
+};
 
 [...game2.querySelectorAll(`input[type="radio"]`)].forEach( x => x.addEventListener('click', checkRadioBtnsCheckStatus))
 

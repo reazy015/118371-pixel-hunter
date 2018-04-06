@@ -72,18 +72,18 @@ const game1 = getElementFromTemplate(`
   </footer>
 `);
 
-const backToMainScreenBtn = game1.querySelector('.back');
+const backToMainScreenBtn = game1.querySelector(`.back`);
 
 const checkRadioBtnsCheckStatus = () => {
-    let firstQuestion =  [...document.querySelectorAll('input[name="question1"]')].some( x => { return x.checked === true });
-    let secondQuestion = [...document.querySelectorAll('input[name="question2"]')].some( x => { return x.checked === true });
-    firstQuestion && secondQuestion ? showScreen(secondGamesScreen) : showScreen(null);
-}
+  let firstQuestion = [...document.querySelectorAll(`input[name="question1"]`)].some( (x) => { return x.checked === true; });
+  let secondQuestion = [...document.querySelectorAll(`input[name="question2"]`)].some( (x) => { return x.checked === true; });
+  firstQuestion && secondQuestion ? showScreen(secondGamesScreen) : showScreen(null);
+};
 
 backToMainScreenBtn.addEventListener(`click`, returnToMainScreen);
 
-[...game1.querySelectorAll(`input[type="radio"]`)].forEach( x => {
-    x.addEventListener('change', checkRadioBtnsCheckStatus);
+[...game1.querySelectorAll(`input[type="radio"]`)].forEach( (x) => {
+  x.addEventListener(`change`, checkRadioBtnsCheckStatus);
 });
 
 export default game1;

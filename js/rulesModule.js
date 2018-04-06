@@ -40,16 +40,21 @@ const rulesScreen = getElementFromTemplate(`
   </footer>
 `);
 
-const rulesBtn = rulesScreen.querySelector('.rules__button');
-const rulesInput = rulesScreen.querySelector('.rules__input');
-const backToMainScreenBtn = rulesScreen.querySelector('.back');
+const rulesBtn = rulesScreen.querySelector(`.rules__button`);
+const rulesInput = rulesScreen.querySelector(`.rules__input`);
+const backToMainScreenBtn = rulesScreen.querySelector(`.back`);
 
-rulesInput.addEventListener(`input`, function (evt) {
-    evt.target.value ? rulesBtn.disabled = false : rulesBtn.disabled = true;
+rulesInput.addEventListener(`input`, (evt) => {
+  if (evt.target.value) {
+    rulesBtn.disabled = false;
+  } else {
+    rulesBtn.disabled = true;
+  }
+
 });
 
-rulesBtn.addEventListener(`click`, function () {
-    showScreen(firstGamesScreen);
+rulesBtn.addEventListener(`click`, () => {
+  showScreen(firstGamesScreen);
 });
 
 backToMainScreenBtn.addEventListener(`click`, returnToMainScreen);

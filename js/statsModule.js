@@ -121,7 +121,7 @@ const stats = getElementFromTemaplate(`
     </div>
   </footer>
 `);
-const backToMainScreenBtn = stats.querySelector('.back');
+const backToMainScreenBtn = stats.querySelector(`.back`);
 
 backToMainScreenBtn.addEventListener(`click`, returnToMainScreen);
 

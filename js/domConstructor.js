@@ -1,5 +1,5 @@
 function getElementFromTemplate(stringTemplate) {
-  let result = document.createElement('div');
+  let result = document.createElement(`div`);
   result.innerHTML = stringTemplate;
   return result;
 }
