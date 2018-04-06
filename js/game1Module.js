@@ -76,10 +76,9 @@ const backToMainScreenBtn = game1.querySelector(`.back`);
 const radioBtnsList = game1.querySelectorAll(`input[type="radio"]`);
 
 const checkRadioBtnsCheckStatus = () => {
-  let firstQuestion = game1.querySelector(`input[name="question1"]:checked`);
-  let secondQuestion = game1.querySelector(`input[name="question2"]:checked`);
+  let answers = game1.querySelectorAll(`input[type="radio"]:checked`);
 
-  if (firstQuestion && secondQuestion) {
+  if (answers.length === 2) {
     showScreen(secondGamesScreen);
   } else {
     showScreen();
