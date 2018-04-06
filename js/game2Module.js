@@ -60,7 +60,7 @@ const game2 = getElementFromTemplate(`
   </footer>
 `);
 const backToMainScreenBtn = game2.querySelector(`.back`);
-const radioBtnsList = game2.querySelectorAll(`input[type="radio"]`);
+const gameForm = game2.querySelector(`.game__content`);
 
 const checkRadioBtnsCheckStatus = () => {
   let answer = game2.querySelector(`input[type="radio"]:checked`);
@@ -72,9 +72,17 @@ const checkRadioBtnsCheckStatus = () => {
   }
 };
 
+const detectRadioButtonChange = (evt) => {
+  let target = evt.target;
+  if (target.tagName === `INPUT`) {
+    checkRadioBtnsCheckStatus();
+  } else {
+    return;
+  }
+};
+
+
 backToMainScreenBtn.addEventListener(`click`, returnToMainScreen);
-for (let i = 0; i < radioBtnsList.length; i++) {
-  radioBtnsList[i].addEventListener(`click`, checkRadioBtnsCheckStatus);
-}
+gameForm.addEventListener(`change`, detectRadioButtonChange);
 
 export default game2;

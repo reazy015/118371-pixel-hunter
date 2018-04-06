@@ -95,6 +95,6 @@ const detectRadioButtonChange = (evt) => {
 };
 
 backToMainScreenBtn.addEventListener(`click`, returnToMainScreen);
-gameForm.addEventListener(`.container-flex--header`, detectRadioButtonChange);
+gameForm.addEventListener(`change`, detectRadioButtonChange);
 
 export default game1;
