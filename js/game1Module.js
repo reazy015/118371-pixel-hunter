@@ -76,7 +76,7 @@ const backToMainScreenBtn = game1.querySelector(`.back`);
 const gameForm = game1.querySelector(`.game__content`);
 
 const checkRadioBtnsCheckStatus = () => {
-  let answers = game1.querySelectorAll(`input[type="radio"]:checked`);
+  const answers = game1.querySelectorAll(`input[type="radio"]:checked`);
 
   if (answers.length === 2) {
     showScreen(secondGamesScreen);
@@ -86,7 +86,7 @@ const checkRadioBtnsCheckStatus = () => {
 };
 
 const detectRadioButtonChange = (evt) => {
-  let target = evt.target;
+  const target = evt.target;
   if (target.tagName === `INPUT`) {
     checkRadioBtnsCheckStatus();
   } else {
