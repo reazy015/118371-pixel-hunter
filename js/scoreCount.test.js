@@ -39,7 +39,7 @@ describe(`score counting function`, () => {
   it(`Live counter should not be a negative number`, () => {
     assert.throws(() => scoreCount(allCorrectFasttAnswers, -1), /Lives count can not be a negative number/);
   });
-  it(`Should return 1650, all answers correct and lives counter is fullfilled`, () => {
+  it(`Should return 1650, all answers correct and lives counter is full`, () => {
     assert.equal(1650, scoreCount(allCorrectFasttAnswers, 3));
   });
   it(`Should return 1500, all answers correct and lives are spent`, () => {
