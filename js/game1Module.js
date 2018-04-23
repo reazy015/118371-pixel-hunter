@@ -51,15 +51,15 @@ const gameOneScreen = (data, gameState) => {
 
   const backToMainScreenBtn = gameScreen.querySelector(`.back`);
   const gameForm = gameScreen.querySelector(`.game__content`);
-  const question = gameScreen.querySelectorAll(`input[type=radio]`);
-  const hasCheckedAnswer = (questions) => {
-    return questions.length > 2;
+  const hasCheckedAnswer = (answers) => {
+    return answers.length === 2;
   };
   const getCheckedAnswer = (collection) => [...collection].filter((item) => item.checked).value;
 
   gameForm.addEventListener(`click`, () => {
-    if (hasCheckedAnswer(question)) {
-      let answerOnQuestion = getCheckedAnswer(question);
+    let answers = document.querySelectorAll(`input[type="radio"]:checked`);
+    if (hasCheckedAnswer(answers)) {
+      let answerOnQuestion = getCheckedAnswer(answers);
       let isCorrect = answerOnQuestion === img.imgType;
       let answerType = getAnswerType(gameState.time);
       recordAnswer(isCorrect, answerType, gameState);

@@ -8,6 +8,7 @@ const recordAnswer = (isCorrect, answerType, gameState) => {
     gameState.lives--;
   }
   gameState.questionNumber++;
+  // console.log(gameState.answers, gameState.lives, gameState.questionNumber);
 };
 
 export default recordAnswer;

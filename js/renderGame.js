@@ -1,6 +1,6 @@
 import gameOneScreen from './game1Module';
-import gameTwoScreen from './game2Module';
-import gameThreeScreen from './game3Module';
+// import gameTwoScreen from './game2Module';
+// import gameThreeScreen from './game3Module';
 import statsSreen from './template/stats-info-template';
 import {gameTypes, GAME_CONDITIONS} from "./gameConstants";
 import showScreen from './showScreen';
