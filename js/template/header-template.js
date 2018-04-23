@@ -19,7 +19,7 @@ const headerTemplate = (game) => {
         <h1 class="game__timer">${game.time}</h1>
         <div class="game__lives">
             ${new Array(3 - game.lives).fill(emptyHeart).join(``)}
-            ${new Array(game.lives).fill(fullHeart).join(``)}
+            ${new Array(game.lives < 0 ? 0 : game.lives).fill(fullHeart).join(``)}
         </div>
      </header>`;
   } else {
