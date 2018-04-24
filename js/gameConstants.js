@@ -3,7 +3,6 @@ export const LIVES_COUNT = 3;
 export const GAME_CONDITIONS = {
   MIN_REQUIRED_ANSWERS: 10,
   CORRECT_ANSWER: 100,
-  EXTRA_LIVE_SCORE: 50,
   BONUS: 50,
 };
 

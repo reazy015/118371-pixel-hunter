@@ -8,9 +8,9 @@ const scoreCount = (answersList, gameLivesCount) => {
     throw new Error(`Lives count can not be a negative number`);
   }
 
-  let score = gameLivesCount * GAME_CONDITIONS.EXTRA_LIVE_SCORE;
+  let score = gameLivesCount * GAME_CONDITIONS.BONUS;
   answersList.forEach((answer) => {
-    if (answer.correct) {
+    if (answer) {
       score += GAME_CONDITIONS.CORRECT_ANSWER;
       if (answer.time < ANSWER_TIME_LIMITS.FAST_ANSWER) {
         score += GAME_CONDITIONS.BONUS;

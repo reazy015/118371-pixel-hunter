@@ -15,13 +15,13 @@ const statsScreen = (gameState) => {
   let templateCorrectScores = ``;
   if (gameState.win) {
     templateCorrectScores = `
-      <td class="result__points">×&nbsp;${GAME_CONDITIONS.CORRECT_ANSWER}</td>
-      <td class="result__total">${pointsForCorrectAnswers}</td>\`;
+      <td class="result__points">${GAME_CONDITIONS.CORRECT_ANSWER}</td>
+      <td class="result__total">${pointsForCorrectAnswers}</td>
     `;
   } else {
     templateCorrectScores = `
     <td class="result__total"></td>
-    <td class="result__total  result__total--final">fail</td>    
+    <td class="result__total  result__total--final">${title}</td>    
     `;
   }
 
@@ -73,19 +73,17 @@ const statsScreen = (gameState) => {
       <td></td>
       <td class="result__extra">Бонус за жизни:</td>
       <td class="result__extra">${lives}&nbsp;<span class="stats__result stats__result--alive"></span></td>
-      <td class="result__points">×&nbsp;${GAME_CONDITIONS.BOUNS}</td>
+      <td class="result__points">×&nbsp;${GAME_CONDITIONS.BONUS}</td>
       <td class="result__total">${pointsForLives}</td>
-    </tr>
-    `;
+    </tr>`;
   }
 
   let totalScoreTemplate = ``;
   if (gameState.win) {
     totalScoreTemplate = `
     <tr>
-      <td colspan="5" class="result__total  result__total--final">${scoreCount(gameState.answers, gameState.lives)}</td>
-    </tr>
-    `;
+      <td colspan="5" class="result__total  result__total--final">${pointsForCorrectAnswers + pointsForLives}</td>
+    </tr>`;
   }
 
   const statsTemplate = `
@@ -104,11 +102,10 @@ const statsScreen = (gameState) => {
       ${livesTemplate}
       ${totalScoreTemplate}
     </table> 
-  </div> 
-  `;
+  </div>`;
 
   const finalResultScreen = getElementFromTemaplate(`
-    ${headerTemplate()}
+    ${headerTemplate(gameState)}
     ${statsTemplate}
     ${footerTemplate}  
   `);
