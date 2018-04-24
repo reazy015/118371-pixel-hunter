@@ -1,6 +1,6 @@
 import getElementFromTemplate from './domConstructor';
 import returnToMainScreen from './returnToMainScreen';
-import pictures from './temp/pictures';
+import pictures from './data/pictures';
 import getRandomElement from './utils/getRandomElement';
 import createUniqueItemsArray from './utils/getUniqueArray';
 import headerTemplate from './template/header-template';
