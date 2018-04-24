@@ -13,7 +13,6 @@ import renderGame from './renderGame';
 
 const gameOneScreen = (data, gameState) => {
   let img = createUniqueItemsArray(pictures, 2);
-  console.log(img);
   const screenTemplate = `
       <div class="game">
     <p class="game__task">${data.text}</p>

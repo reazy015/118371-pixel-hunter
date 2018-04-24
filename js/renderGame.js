@@ -12,20 +12,18 @@ const renderGame = (gameState, questionType) => {
   } else if (gameState.questionNumber === GAME_CONDITIONS.MIN_REQUIRED_ANSWERS) {
     gameState.win = true;
     showScreen(statsScreen(gameState));
-    console.log(gameState);
   } else {
     switch (questionType) {
       case `game1`:
-        showScreen(gameOneScreen(gameTypes[2], gameState));
+        showScreen(gameOneScreen(gameTypes[0], gameState));
         break;
       case `game2`:
-        showScreen(gameTwoScreen(gameTypes[2], gameState));
+        showScreen(gameTwoScreen(gameTypes[1], gameState));
         break;
       case `game3`:
         showScreen(gameThreeScreen(gameTypes[2], gameState));
         break;
     }
-    console.log(questionType);
   }
 };
 

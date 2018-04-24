@@ -1,6 +1,6 @@
-import getElementFromTemaplate from './domConstructor.js';
-import scoreCount from './scoreCount';
+import getElementFromTemplate from './domConstructor.js';
 import returnToMainScreen from './returnToMainScreen';
+import scoreCount from './scoreCount';
 import {GAME_CONDITIONS} from "./gameConstants";
 import statsInfoTemplate from './template/stats-info-template';
 import headerTemplate from './template/header-template';
@@ -82,7 +82,7 @@ const statsScreen = (gameState) => {
   if (gameState.win) {
     totalScoreTemplate = `
     <tr>
-      <td colspan="5" class="result__total  result__total--final">${pointsForCorrectAnswers + pointsForLives}</td>
+      <td colspan="5" class="result__total  result__total--final">${scoreCount(gameState.answers, gameState.lives)}</td>
     </tr>`;
   }
 
@@ -104,7 +104,7 @@ const statsScreen = (gameState) => {
     </table> 
   </div>`;
 
-  const finalResultScreen = getElementFromTemaplate(`
+  const finalResultScreen = getElementFromTemplate(`
     ${headerTemplate(gameState)}
     ${statsTemplate}
     ${footerTemplate}  

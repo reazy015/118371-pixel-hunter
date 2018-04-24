@@ -48,7 +48,7 @@ const gameThreeScreen = (data, gameState) => {
   gameContent.addEventListener(`click`, (evt) => {
     let target = evt.target;
     let targetImgSrc = target.children[0].src;
-    if (target.classList.contains('game__option')) {
+    if (target.classList.contains(`game__option`)) {
       let answerIndex = imgSourceArray.indexOf(targetImgSrc);
       let isCorrect = imgList[answerIndex].imgType === RIGHT_TYPE_IMG;
       let answerType = getAnswerType(gameState.time);

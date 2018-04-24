@@ -1,4 +1,4 @@
-import {GAME_CONDITIONS, ANSWER_TIME_LIMITS} from './gameConstants';
+import {GAME_CONDITIONS, ANSWER_TYPES} from './gameConstants';
 
 const scoreCount = (answersList, gameLivesCount) => {
   if (!answersList || answersList.length < GAME_CONDITIONS.MIN_REQUIRED_ANSWERS) {
@@ -10,14 +10,18 @@ const scoreCount = (answersList, gameLivesCount) => {
 
   let score = gameLivesCount * GAME_CONDITIONS.BONUS;
   answersList.forEach((answer) => {
-    if (answer) {
-      score += GAME_CONDITIONS.CORRECT_ANSWER;
-      if (answer.time < ANSWER_TIME_LIMITS.FAST_ANSWER) {
-        score += GAME_CONDITIONS.BONUS;
-      }
-      if (answer.time > ANSWER_TIME_LIMITS.SLOW_ANSWER) {
-        score -= GAME_CONDITIONS.BONUS;
-      }
+    switch (answer) {
+      case ANSWER_TYPES.SLOW:
+        score += (GAME_CONDITIONS.CORRECT_ANSWER - GAME_CONDITIONS.BONUS);
+        break;
+      case ANSWER_TYPES.FAST:
+        score += (GAME_CONDITIONS.CORRECT_ANSWER + GAME_CONDITIONS.BONUS);
+        break;
+      case ANSWER_TYPES.NORMAL:
+        score += GAME_CONDITIONS.CORRECT_ANSWER;
+        break;
+      default:
+        break;
     }
   });
 

@@ -1,5 +1,5 @@
 const getRandomElement = (arr) => {
-  return arr[Math.floor(Math.random() * ((arr.length - 1) - 0))];
+  return arr[Math.floor(Math.random() * (arr.length))];
 };
 
 export default getRandomElement;
