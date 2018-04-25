@@ -1,74 +1,66 @@
 import getElementFromTemplate from './domConstructor';
-import showScreen from './showScreen';
+import getRandomElement from './utils/getRandomElement';
+import getUniqueItemsArray from './utils/getUniqueArray';
+import pictures from './data/pictures';
+import {gameTypes} from "./gameConstants";
+import headerTemplate from './template/header-template';
+import footerTemplate from './template/footer-template';
+import statsInfoTemplate from './template/stats-info-template';
+import getAnswerType from './getAnswerType';
+import recordAnswer from './recordAnswer';
+import renderGame from './renderGame';
 import returnToMainScreen from './returnToMainScreen';
-import statsScreen from './statsModule';
 
-const game3 = getElementFromTemplate(`
-    <header class="header">
-    <div class="header__back">
-      <button class="back">
-        <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-        <img src="img/logo_small.svg" width="101" height="44">
-      </button>
-    </div>
-    <h1 class="game__timer">NN</h1>
-    <div class="game__lives">
-      <img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">
-      <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
-      <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
-    </div>
-  </header>
+const RIGHT_TYPE_IMG = `paint`;
+
+const gameThreeScreen = (data, gameState) => {
+  let imgList = getUniqueItemsArray(pictures, 4);
+
+  const gameTemplate = `
   <div class="game">
-    <p class="game__task">Найдите рисунок среди изображений</p>
+    <p class="game__task">${data.text}</p>
     <form class="game__content  game__content--triple">
       <div class="game__option">
-        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
+        <img src="${imgList[0].imgSrc}" alt="Option 1" width="304" height="455">
       </div>
       <div class="game__option  game__option--selected">
-        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
+        <img src="${imgList[1].imgSrc}" alt="Option 1" width="304" height="455">
       </div>
       <div class="game__option">
-        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
+        <img src="${imgList[2].imgSrc}" alt="Option 1" width="304" height="455">
       </div>
     </form>
     <div class="stats">
-      <ul class="stats">
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--correct"></li>
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--unknown"></li>
-      </ul>
+      ${statsInfoTemplate(gameState)}
     </div>
-  </div>
-  <footer class="footer">
-    <a href="https://htmlacademy.ru" class="social-link social-link--academy">HTML Academy</a>
-    <span class="footer__made-in">Сделано в <a href="https://htmlacademy.ru" class="footer__link">HTML Academy</a> &copy; 2016</span>
-    <div class="footer__social-links">
-      <a href="https://twitter.com/htmlacademy_ru" class="social-link  social-link--tw">Твиттер</a>
-      <a href="https://www.instagram.com/htmlacademy/" class="social-link  social-link--ins">Инстаграм</a>
-      <a href="https://www.facebook.com/htmlacademy" class="social-link  social-link--fb">Фэйсбук</a>
-      <a href="https://vk.com/htmlacademy" class="social-link  social-link--vk">Вконтакте</a>
-    </div>
-  </footer>
-`);
-const backToMainScreenBtn = game3.querySelector(`.back`);
-const gameContent = game3.querySelector(`.game__content`);
+  </div>`;
 
-const checkSwitchedGameOption = (evt) => {
-  if (evt.target.classList.contains(`game__option`)) {
-    showScreen(statsScreen);
-  } else {
-    showScreen();
-  }
+  const gameScreen = getElementFromTemplate(`
+    ${headerTemplate(gameState)}
+    ${gameTemplate}
+    ${footerTemplate}
+  `);
+
+  const backToMainScreenBtn = gameScreen.querySelector(`.back`);
+  const gameContent = gameScreen.querySelector(`.game__content`);
+  const imgSourceArray = imgList.map((item) => item.imgSrc);
+
+  gameContent.addEventListener(`click`, (evt) => {
+    let target = evt.target;
+    let targetImgSrc = target.children[0].src;
+    if (target.classList.contains(`game__option`)) {
+      let answerIndex = imgSourceArray.indexOf(targetImgSrc);
+      let isCorrect = imgList[answerIndex].imgType === RIGHT_TYPE_IMG;
+      let answerType = getAnswerType(gameState.time);
+
+      recordAnswer(isCorrect, answerType, gameState);
+      renderGame(gameState, getRandomElement(gameTypes).type);
+    }
+  });
+
+  backToMainScreenBtn.addEventListener(`click`, returnToMainScreen);
+
+  return gameScreen;
 };
 
-gameContent.addEventListener(`click`, checkSwitchedGameOption);
-backToMainScreenBtn.addEventListener(`click`, returnToMainScreen);
-
-export default game3;
+export default gameThreeScreen;

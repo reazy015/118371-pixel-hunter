@@ -1,18 +1,14 @@
-import getElementFromTemplate from './domConstructor.js';
-import showScreen from './showScreen.js';
+import getElementFromTemplate from './domConstructor';
 import returnToMainScreen from './returnToMainScreen';
-import firstGamesScreen from './game1Module.js';
+import headerTemplate from './template/header-template';
+import footerTemplate from './template/footer-template';
+import renderGame from './renderGame';
+import getGameState from './gameState';
+import {gameTypes} from "./gameConstants";
+import getRandomElement from './utils/getRandomElement';
 
-const rulesScreen = getElementFromTemplate(`
-    <header class="header">
-    <div class="header__back">
-      <button class="back">
-        <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-        <img src="img/logo_small.svg" width="101" height="44">
-      </button>
-    </div>
-  </header>
-  <div class="rules">
+const rulesScreenTempalte = `
+    <div class="rules">
     <h1 class="rules__title">Правила</h1>
     <p class="rules__description">Угадай 10 раз для каждого изображения фото <img
       src="img/photo_icon.png" width="16" height="16"> или рисунок <img
@@ -28,16 +24,12 @@ const rulesScreen = getElementFromTemplate(`
       <button class="rules__button  continue" type="submit" disabled>Go!</button>
     </form>
   </div>
-  <footer class="footer">
-    <a href="https://htmlacademy.ru" class="social-link social-link--academy">HTML Academy</a>
-    <span class="footer__made-in">Сделано в <a href="https://htmlacademy.ru" class="footer__link">HTML Academy</a> &copy; 2016</span>
-    <div class="footer__social-links">
-      <a href="https://twitter.com/htmlacademy_ru" class="social-link  social-link--tw">Твиттер</a>
-      <a href="https://www.instagram.com/htmlacademy/" class="social-link  social-link--ins">Инстаграм</a>
-      <a href="https://www.facebook.com/htmlacademy" class="social-link  social-link--fb">Фэйсбук</a>
-      <a href="https://vk.com/htmlacademy" class="social-link  social-link--vk">Вконтакте</a>
-    </div>
-  </footer>
+
+`;
+const rulesScreen = getElementFromTemplate(`
+  ${headerTemplate()}
+  ${rulesScreenTempalte}
+  ${footerTemplate}
 `);
 
 const rulesBtn = rulesScreen.querySelector(`.rules__button`);
@@ -50,11 +42,13 @@ rulesInput.addEventListener(`input`, (evt) => {
   } else {
     rulesBtn.disabled = true;
   }
-
 });
 
-rulesBtn.addEventListener(`click`, () => {
-  showScreen(firstGamesScreen);
+rulesBtn.addEventListener(`click`, (evt) => {
+  evt.preventDefault();
+  renderGame(getGameState(), getRandomElement(gameTypes).type);
+  rulesInput.value = ``;
+  rulesBtn.disabled = true;
 });
 
 backToMainScreenBtn.addEventListener(`click`, returnToMainScreen);
