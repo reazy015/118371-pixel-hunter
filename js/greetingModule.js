@@ -6,6 +6,6 @@ const greetingScreen = new GreetingView();
 
 greetingScreen.onNextButtonClick = () => {
   showScreen(rulesScreen);
-}
+};
 
 export default greetingScreen.element;
