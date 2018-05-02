@@ -1,17 +1,20 @@
-import getElementFromTemplate from '../domConstructor';
+const getElementFromTemplate = (template) => {
+  const container = document.createElement(`div`);
+  container.innerHTML = template;
+  return container;
+};
 
 export default class AbstractView {
+
   get template() {
-    throw new Error(`You should redefine this method for current view`);
+    throw new Error(`You have to define template for view`);
   }
 
   render() {
     return getElementFromTemplate(this.template);
   }
 
-  bind() {
-
-  }
+  bind() {}
 
   get element() {
     if (!this._element) {
