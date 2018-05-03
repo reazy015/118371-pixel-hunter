@@ -1,4 +1,3 @@
-import showScreen from './showScreen.js';
-import introScreen from './introModule.js';
+import App from './application';
 
-showScreen(introScreen);
+App.showIntro();

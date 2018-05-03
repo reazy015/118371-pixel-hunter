@@ -1,6 +1,4 @@
-import AbstractView from './abstract-view';
-import footerTemplate from '../template/footer-template';
-import headerTemplate from '../template/header-template';
+import AbstractView from '../abstract-view';
 
 export default class RulesView extends AbstractView {
   constructor() {
@@ -18,44 +16,34 @@ export default class RulesView extends AbstractView {
 
   get template() {
     return `
-      ${headerTemplate()}
-      <div class="rules">
-        <h1 class="rules__title">${this.title}</h1>
-        <p class="rules__description">${this.description}</p>
-        <form class="rules__form">
-          <input class="rules__input" type="text" placeholder="Ваше Имя">
-          <button class="rules__button  continue" type="submit" disabled>Go!</button>
-        </form>
-      </div>
-      ${footerTemplate}
-    `;
+    <div class="rules">
+      <h1 class="rules__title">${this.title}</h1>
+      <p class="rules__description">${this.description}</p>
+      <form class="rules__form">
+        <input class="rules__input" type="text" placeholder="Ваше Имя">
+        <button class="rules__button  continue" type="submit" disabled>Go!</button>
+      </form>
+    </div>`;
   }
 
   bind() {
-    const rulesBtn = this.element.querySelector(`.rules__button`);
-    const rulesInput = this.element.querySelector(`.rules__input`);
-    const backToMainScreenBtn = this.element.querySelector(`.back`);
+    this.nameField = this.element.querySelector(`.rules__input`);
+    this.buttonSubmit = this.element.querySelector(`.rules__button`);
 
-    rulesBtn.addEventListener(`click`, (evt) => {
-      evt.preventDefault();
-      this.nextGameScreen(rulesInput, rulesBtn);
-    });
+    this.nameField.addEventListener(`input`, () => this.onInputChange(this.nameField.value));
 
-    rulesInput.addEventListener(`input`, (evt) => {
-      evt.preventDefault();
-      this.onInputChange(evt.target, rulesBtn);
-    });
-
-    backToMainScreenBtn.addEventListener(`click`, (evt) => {
-      evt.preventDefault();
-      this.backToMainScreen();
-    });
+    this.buttonSubmit.onclick = () => this.onFormSubmit();
   }
 
+  enableButton() {
+    this.buttonSubmit.disabled = false;
+  }
 
-  nextGameScreen() {}
+  disableButton() {
+    this.buttonSubmit.disabled = true;
+  }
 
   onInputChange() {}
 
-  backToMainScreen() {}
+  onFormSubmit() {}
 }
