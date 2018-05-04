@@ -4,6 +4,8 @@ import RulesScreen from "./screens/rules-screen";
 import GameScreen from "./screens/game-screen";
 import StatsScreen from "./screens/stats-screen";
 import GameModel from "./game-model";
+import Loader from "./utils/loader";
+import ErrorView from "./view/error-view";
 
 const showScreen = (element) => {
   const screenContainer = document.querySelector(`.central`);
@@ -11,9 +13,15 @@ const showScreen = (element) => {
   screenContainer.appendChild(element);
 };
 
+let gameData;
 
 export default class Application {
-  static showIntro() {
+  static start() {
+    Loader.loadData().then(Application.showIntro).catch(Application.showError);
+  }
+
+  static showIntro(data) {
+    gameData = data;
     const intro = new IntroScreen();
     showScreen(intro.root);
     intro.init();
@@ -32,7 +40,7 @@ export default class Application {
   }
 
   static showGame() {
-    const game = new GameScreen(new GameModel());
+    const game = new GameScreen(new GameModel(gameData));
     showScreen(game.root);
     game.startGame();
   }
@@ -41,5 +49,10 @@ export default class Application {
     const stats = new StatsScreen(gameState);
     showScreen(stats.root);
     stats.init();
+  }
+
+  static showError(error) {
+    const errorView = new ErrorView(error);
+    showScreen(errorView.element);
   }
 }
