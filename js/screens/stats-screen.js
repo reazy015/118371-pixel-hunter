@@ -4,9 +4,9 @@ import StatsView from "../view/stats-view";
 import FooterView from "../view/footer-view";
 
 class StatsScreen {
-  constructor(gameState) {
+  constructor(data) {
     this.header = new HeaderView();
-    this.content = new StatsView(gameState);
+    this.content = new StatsView(data);
     this.footer = new FooterView();
     this.root = document.createElement(`div`);
     this.root.appendChild(this.header.element);

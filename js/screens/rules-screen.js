@@ -23,8 +23,8 @@ export default class RulesScreen {
       }
     };
 
-    this.content.onFormSubmit = () => {
-      App.showGame();
+    this.content.onFormSubmit = (playerName) => {
+      App.start(playerName);
     };
 
     this.header.onBackButtonClick = () => App.showGreeting();
