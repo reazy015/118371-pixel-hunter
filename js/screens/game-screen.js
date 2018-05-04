@@ -82,7 +82,7 @@ export default class GameScreen {
       if (!this.model.isDead()) {
         this.model.win();
       }
-      App.showStats(this.model.gameState);
+      App.showStats(this.model);
     } else {
       this.startGame();
     }

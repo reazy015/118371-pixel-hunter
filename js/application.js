@@ -13,15 +13,16 @@ const showScreen = (element) => {
   screenContainer.appendChild(element);
 };
 
-let gameData;
-
 export default class Application {
-  static start() {
-    Loader.loadData().then(Application.showIntro).catch(Application.showError);
+  static start(playerName) {
+    Loader.loadData()
+        .then((data) => {
+          Application.showGame(data, playerName);
+        })
+        .catch(Application.showError);
   }
 
-  static showIntro(data) {
-    gameData = data;
+  static showIntro() {
     const intro = new IntroScreen();
     showScreen(intro.root);
     intro.init();
@@ -39,16 +40,22 @@ export default class Application {
     rules.init();
   }
 
-  static showGame() {
-    const game = new GameScreen(new GameModel(gameData));
+  static showGame(data, playerName) {
+    const game = new GameScreen(new GameModel(data, playerName));
     showScreen(game.root);
     game.startGame();
   }
 
-  static showStats(gameState) {
-    const stats = new StatsScreen(gameState);
-    showScreen(stats.root);
-    stats.init();
+  static showStats(model) {
+    const playerName = model.playerName;
+    Loader.saveResults(model.gameState, playerName)
+        .then(() => Loader.loadResults(playerName))
+        .then((data) => {
+          const stats = new StatsScreen(data);
+          showScreen(stats.root);
+          stats.init();
+        })
+        .catch(Application.showError);
   }
 
   static showError(error) {
