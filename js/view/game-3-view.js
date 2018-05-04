@@ -1,13 +1,12 @@
 import AbstractView from '../abstract-view';
 import statsBarTemplate from "../templates/statsBarTemplate";
-import GAME_DATA from "../data/game-data";
 import {PictureType} from "../utils/constants";
 
 export default class GameThreeView extends AbstractView {
-  constructor(gameState) {
+  constructor(model) {
     super();
-    this.gameState = gameState;
-    this.data = GAME_DATA[gameState.questionNumber];
+    this.gameState = model.gameState;
+    this.data = model.gameData[this.gameState.questionNumber];
     this.gameQuestion = this.data.question;
     this.gameAnswers = this.data.answers;
     this.images = this.gameAnswers.map((answer) => answer.image);

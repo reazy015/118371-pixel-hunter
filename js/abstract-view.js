@@ -1,7 +1,7 @@
-const getElementFromTemplate = (template) => {
-  const container = document.createElement(`div`);
-  container.innerHTML = template;
-  return container;
+const createElement = (template = ``, tagName = `div`) => {
+  const outer = document.createElement(tagName);
+  outer.innerHTML = template.trim();
+  return outer;
 };
 
 export default class AbstractView {
@@ -11,7 +11,7 @@ export default class AbstractView {
   }
 
   render() {
-    return getElementFromTemplate(this.template);
+    return createElement(this.template);
   }
 
   bind() {}

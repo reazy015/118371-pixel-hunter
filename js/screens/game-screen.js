@@ -1,4 +1,3 @@
-import GAME_DATA from "../data/game-data";
 import App from '../application';
 import HeaderView from "../view/header-view";
 import FooterView from "../view/footer-view";
@@ -17,8 +16,9 @@ const GameType = {
 export default class GameScreen {
   constructor(model) {
     this.model = model;
+    this.data = this.model.gameData;
     this.header = new HeaderView(this.model.gameState);
-    this.level = new GameOneView(this.model.gameState);
+    this.level = new GameOneView(this.model);
     this.footer = new FooterView();
     this.root = document.createElement(`div`);
     this.root.appendChild(this.header.element);
@@ -91,17 +91,18 @@ export default class GameScreen {
   changeLevel() {
     this.model.restartTime();
     this.updateHeader();
-    const newGameType = GAME_DATA[this.model.gameState.questionNumber].type;
+    const newGameType = this.data[this.model.gameState.questionNumber].type;
+
     let level;
     switch (newGameType) {
       case GameType.TINDER_LIKE:
-        level = new GameOneView(this.model.gameState);
+        level = new GameOneView(this.model);
         break;
       case GameType.TWO_OF_TWO:
-        level = new GameTwoView(this.model.gameState);
+        level = new GameTwoView(this.model);
         break;
       case GameType.ONE_OF_THREE:
-        level = new GameThreeView(this.model.gameState);
+        level = new GameThreeView(this.model);
         break;
     }
     this.changeLevelView(level);

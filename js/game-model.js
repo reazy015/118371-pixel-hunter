@@ -1,7 +1,8 @@
 import {LIVES_COUNT, TASK_COUNT, TimeLimits} from "./utils/constants";
 
 export default class GameModel {
-  constructor() {
+  constructor(gameData) {
+    this.gameData = gameData;
     this.restartGame();
   }
 
