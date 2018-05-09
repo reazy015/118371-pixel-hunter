@@ -14,7 +14,7 @@ export const resizeImage = (frame, given) => {
   return image;
 };
 
-const resizeImagesFromElement = (element) => {
+export const resizeImagesFromElement = (element) => {
   const images = element.querySelectorAll(`.game__option`);
   images.forEach(function (item) {
     const frameSizes = {
@@ -35,5 +35,3 @@ const resizeImagesFromElement = (element) => {
     };
   });
 };
-
-export default resizeImagesFromElement;

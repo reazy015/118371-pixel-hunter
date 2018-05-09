@@ -1,8 +1,14 @@
 import {LIVES_COUNT, TASK_COUNT, TimeLimits} from "./utils/constants";
 
 export default class GameModel {
-  constructor() {
+  constructor(gameData, playerName) {
+    this.gameData = gameData;
+    this.playerName = playerName;
     this.restartGame();
+  }
+
+  get gameState() {
+    return this._gameState;
   }
 
   restartGame() {
@@ -13,10 +19,6 @@ export default class GameModel {
       questionNumber: 0,
       win: false
     };
-  }
-
-  get gameState() {
-    return this._gameState;
   }
 
   hasNextLevel() {

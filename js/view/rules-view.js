@@ -32,7 +32,10 @@ export default class RulesView extends AbstractView {
 
     this.nameField.addEventListener(`input`, () => this.onInputChange(this.nameField.value));
 
-    this.buttonSubmit.onclick = () => this.onFormSubmit();
+    this.buttonSubmit.onclick = (evt) => {
+      evt.preventDefault();
+      this.onFormSubmit(this.nameField.value);
+    };
   }
 
   enableButton() {

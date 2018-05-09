@@ -16,15 +16,14 @@ export default class RulesScreen {
 
   init() {
     this.content.onInputChange = (value) => {
-      if (value === ``) {
-        this.content.disableButton();
-      } else {
+      this.content.disableButton();
+      if (value !== ``) {
         this.content.enableButton();
       }
     };
 
-    this.content.onFormSubmit = () => {
-      App.showGame();
+    this.content.onFormSubmit = (playerName) => {
+      App.showGame(playerName);
     };
 
     this.header.onBackButtonClick = () => App.showGreeting();

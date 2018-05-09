@@ -1,8 +1,4 @@
-const getElementFromTemplate = (template) => {
-  const container = document.createElement(`div`);
-  container.innerHTML = template;
-  return container;
-};
+import createElement from './utils/create-element';
 
 export default class AbstractView {
 
@@ -11,7 +7,7 @@ export default class AbstractView {
   }
 
   render() {
-    return getElementFromTemplate(this.template);
+    return createElement(this.template);
   }
 
   bind() {}
