@@ -1,7 +1,7 @@
 import AbstractView from '../abstract-view';
 import {AnswerType, Points} from '../utils/constants';
 import getScore from '../utils/get-score';
-import statsBarTemplate from '../templates/statsBarTemplate';
+import statsBarTemplate from '../templates/stats-bar-template';
 
 export default class StatsView extends AbstractView {
   constructor(data) {
@@ -9,6 +9,25 @@ export default class StatsView extends AbstractView {
     this.data = data.reverse();
     this.title = this.data[0].win ? `Победа!` : `Проигрыш`;
     this._templateAllGames = ``;
+  }
+
+  get template() {
+    this._getTemplates(this.data);
+    return `
+    <div class="result">
+      <h1>${this.title}</h1>
+      ${this._templateAllGames}
+    </div>`;
+  }
+
+  _getStatsBar(gameState) {
+    return statsBarTemplate(gameState);
+  }
+
+  _getTemplates(data) {
+    data.forEach((gameState, index) => {
+      this._templateAllGames += this._templateOneGame(gameState, index);
+    });
   }
 
   _templateCorrectScores(gameState) {
@@ -91,10 +110,6 @@ export default class StatsView extends AbstractView {
     }
   }
 
-  _getStatsBar(gameState) {
-    return statsBarTemplate(gameState);
-  }
-
   _templateOneGame(gameState, index) {
     return `
     <table class="result__table">
@@ -110,18 +125,4 @@ export default class StatsView extends AbstractView {
     </table>`;
   }
 
-  _getTemplates(data) {
-    data.forEach((gameState, index) => {
-      this._templateAllGames += this._templateOneGame(gameState, index);
-    });
-  }
-
-  get template() {
-    this._getTemplates(this.data);
-    return `
-    <div class="result">
-      <h1>${this.title}</h1>
-      ${this._templateAllGames}
-    </div>`;
-  }
 }

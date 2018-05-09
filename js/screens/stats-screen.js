@@ -3,7 +3,7 @@ import HeaderView from "../view/header-view";
 import StatsView from "../view/stats-view";
 import FooterView from "../view/footer-view";
 
-class StatsScreen {
+export default class StatsScreen {
   constructor(data) {
     this.header = new HeaderView();
     this.content = new StatsView(data);
@@ -18,5 +18,3 @@ class StatsScreen {
     this.header.onBackButtonClick = () => App.showGreeting();
   }
 }
-
-export default StatsScreen;

@@ -1,8 +1,4 @@
-const createElement = (template = ``, tagName = `div`) => {
-  const outer = document.createElement(tagName);
-  outer.innerHTML = template.trim();
-  return outer;
-};
+import createElement from './utils/create-element';
 
 export default class AbstractView {
 

@@ -7,6 +7,10 @@ export default class GameModel {
     this.restartGame();
   }
 
+  get gameState() {
+    return this._gameState;
+  }
+
   restartGame() {
     this._gameState = {
       time: TimeLimits.INITIAL,
@@ -15,10 +19,6 @@ export default class GameModel {
       questionNumber: 0,
       win: false
     };
-  }
-
-  get gameState() {
-    return this._gameState;
   }
 
   hasNextLevel() {

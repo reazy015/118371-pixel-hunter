@@ -7,30 +7,45 @@ import GameModel from "./game-model";
 import Loader from "./utils/loader";
 import ErrorView from "./view/error-view";
 
+const screenContainer = document.querySelector(`.central`);
+
 const showScreen = (element) => {
-  const screenContainer = document.querySelector(`.central`);
   screenContainer.innerHTML = ``;
   screenContainer.appendChild(element);
 };
 
+const showScreenWithAnimation = (element) => {
+  screenContainer.firstElementChild.classList.add(`hide-animation`);
+  element.classList.add(`show-animation`);
+  screenContainer.appendChild(element);
+};
+
+let gameData;
+
 export default class Application {
-  static start(playerName) {
-    Loader.loadData()
-        .then((data) => {
-          Application.showGame(data, playerName);
-        })
-        .catch(Application.showError);
+  static async start() {
+    try {
+      gameData = await Loader.loadData();
+      await Loader.preloadImages(gameData);
+      this.showGreeting(true);
+    } catch (error) {
+      Application.showError(error);
+    }
   }
 
   static showIntro() {
     const intro = new IntroScreen();
     showScreen(intro.root);
-    intro.init();
+    this.start();
   }
 
-  static showGreeting() {
+  static showGreeting(withAnimation) {
     const greeting = new GreetingScreen();
-    showScreen(greeting.root);
+    if (withAnimation) {
+      showScreenWithAnimation(greeting.root);
+    } else {
+      showScreen(greeting.root);
+    }
     greeting.init();
   }
 
@@ -40,22 +55,23 @@ export default class Application {
     rules.init();
   }
 
-  static showGame(data, playerName) {
-    const game = new GameScreen(new GameModel(data, playerName));
+  static showGame(playerName) {
+    const game = new GameScreen(new GameModel(gameData, playerName));
     showScreen(game.root);
     game.startGame();
   }
 
-  static showStats(model) {
+  static async showStats(model) {
     const playerName = model.playerName;
-    Loader.saveResults(model.gameState, playerName)
-        .then(() => Loader.loadResults(playerName))
-        .then((data) => {
-          const stats = new StatsScreen(data);
-          showScreen(stats.root);
-          stats.init();
-        })
-        .catch(Application.showError);
+
+    try {
+      await Loader.saveResults(model.gameState, playerName);
+      const stats = new StatsScreen(await Loader.loadResults(playerName));
+      showScreen(stats.root);
+      stats.init();
+    } catch (error) {
+      Application.showError(error);
+    }
   }
 
   static showError(error) {

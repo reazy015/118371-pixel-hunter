@@ -1,5 +1,5 @@
 import AbstractView from '../abstract-view';
-import statsBarTemplate from "../templates/statsBarTemplate";
+import statsBarTemplate from "../templates/stats-bar-template";
 
 export default class GameOneView extends AbstractView {
   constructor(model) {

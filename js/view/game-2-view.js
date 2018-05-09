@@ -1,5 +1,5 @@
 import AbstractView from '../abstract-view';
-import statsBarTemplate from "../templates/statsBarTemplate";
+import statsBarTemplate from "../templates/stats-bar-template";
 
 export default class GameTwoView extends AbstractView {
   constructor(model) {
@@ -62,8 +62,6 @@ export default class GameTwoView extends AbstractView {
       }
     });
   }
-
-  onBackButtonClick() {}
 
   onFormClick() {}
 }

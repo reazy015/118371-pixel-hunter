@@ -5,7 +5,8 @@ import GameOneView from "../view/game-1-view";
 import GameTwoView from "../view/game-2-view";
 import GameThreeView from "../view/game-3-view";
 import {AnswerType, TimeLimits} from "../utils/constants";
-import resizeImagesFromElement from "../utils/resize-image";
+import {resizeImagesFromElement} from "../utils/resize-image";
+import ModalView from "../view/modal-view";
 
 const GameType = {
   TWO_OF_TWO: `two-of-two`,
@@ -31,30 +32,24 @@ export default class GameScreen {
     return this.root;
   }
 
-  startTimer() {
-    this._interval = setInterval(() => {
-      this.model.tick();
-      if (this.model.gameState.time <= 0) {
-        this.onAnswerGiven(false);
-      }
-      this.updateHeader();
-    }, 1000);
-  }
-
-  startGame() {
-    this.changeLevel();
-    this.startTimer();
-  }
-
-  stopGame() {
-    clearInterval(this._interval);
+  getAnswerType(time) {
+    this.answerTime = TimeLimits.INITIAL - time;
+    let answerType;
+    if (this.answerTime < TimeLimits.FAST) {
+      answerType = AnswerType.FAST;
+    } else if (this.answerTime <= TimeLimits.SLOW) {
+      answerType = AnswerType.NORMAL;
+    } else {
+      answerType = AnswerType.SLOW;
+    }
+    return answerType;
   }
 
   updateHeader() {
     const header = new HeaderView(this.model.gameState);
     this.root.replaceChild(header.element, this.header.element);
     this.header = header;
-    this.header.onBackButtonClick = () => this.goBackScreen();
+    this.header.onBackButtonClick = () => this.showModal();
   }
 
   changeLevelView(view) {
@@ -62,30 +57,6 @@ export default class GameScreen {
     this.level = view;
     resizeImagesFromElement(view.element);
     this.level.onFormClick = this.onAnswerGiven.bind(this);
-  }
-
-  onAnswerGiven(isCorrect) {
-    this.stopGame();
-    this.answer = this.model._gameState.answers[this.model._gameState.questionNumber];
-    if (isCorrect) {
-      this.answer = this.getAnswerType(this.model.gameState.time);
-    } else {
-      this.answer = AnswerType.WRONG;
-      this.model.takeOffLife();
-    }
-    this.model.recordAnswer(this.answer);
-    this.checkContinue();
-  }
-
-  checkContinue() {
-    if (this.model.isDead() || !this.model.hasNextLevel()) {
-      if (!this.model.isDead()) {
-        this.model.win();
-      }
-      App.showStats(this.model);
-    } else {
-      this.startGame();
-    }
   }
 
   changeLevel() {
@@ -108,20 +79,63 @@ export default class GameScreen {
     this.changeLevelView(level);
   }
 
-  goBackScreen() {
-    App.showGreeting();
+  showModal() {
+    this.stopGame();
+    const modal = new ModalView();
+    modal.onResetClick = () => {
+      App.showGreeting();
+    };
+    modal.onContinueClick = () => {
+      this.continueGame();
+      modal.element.remove();
+    };
+    this.root.appendChild(modal.element);
   }
 
-  getAnswerType(time) {
-    this.answerTime = TimeLimits.INITIAL - time;
-    let answerType;
-    if (this.answerTime < TimeLimits.FAST) {
-      answerType = AnswerType.FAST;
-    } else if (this.answerTime <= TimeLimits.SLOW) {
-      answerType = AnswerType.NORMAL;
+  startTimer() {
+    this._interval = setInterval(() => {
+      this.model.tick();
+      if (this.model.gameState.time <= 0) {
+        this.onAnswerGiven(false);
+      }
+      this.updateHeader();
+    }, TimeLimits.TICK);
+  }
+
+  startGame() {
+    this.changeLevel();
+    this.startTimer();
+  }
+
+  continueGame() {
+    this.startTimer();
+  }
+
+  stopGame() {
+    clearInterval(this._interval);
+  }
+
+  checkContinue() {
+    if (this.model.isDead() || !this.model.hasNextLevel()) {
+      if (!this.model.isDead()) {
+        this.model.win();
+      }
+      App.showStats(this.model);
     } else {
-      answerType = AnswerType.SLOW;
+      this.startGame();
     }
-    return answerType;
+  }
+
+  onAnswerGiven(isCorrect) {
+    this.stopGame();
+    this.answer = this.model._gameState.answers[this.model._gameState.questionNumber];
+    if (isCorrect) {
+      this.answer = this.getAnswerType(this.model.gameState.time);
+    } else {
+      this.answer = AnswerType.WRONG;
+      this.model.takeOffLife();
+    }
+    this.model.recordAnswer(this.answer);
+    this.checkContinue();
   }
 }
