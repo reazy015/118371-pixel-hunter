@@ -14,7 +14,10 @@ const imagemin = require('gulp-imagemin');
 const rollup = require('gulp-better-rollup');
 const sourcemaps = require('gulp-sourcemaps');
 const mocha = require('gulp-mocha');
-
+const resolve = require('rollup-plugin-node-resolve');
+const commonjs = require('rollup-plugin-commonjs');
+const babel = require('rollup-plugin-babel');
+const uglify = require('gulp-uglify');
 
 gulp.task('style', function () {
   return gulp.src('sass/style.scss')
@@ -40,20 +43,36 @@ gulp.task('style', function () {
 });
 
 gulp.task('scripts', function () {
-  return gulp.src('js/**/*.js')
+  return gulp.src('js/main.js')
     .pipe(plumber())
     .pipe(sourcemaps.init())
-    .pipe(rollup({}, 'iife'))
+    .pipe(rollup({
+      plugins: [
+        resolve({browser: true}),
+        commonjs(),
+        babel({
+          babelrc: false,
+          exclude: 'node_modules/**',
+          presets: [
+            ['env', {modules: false}]
+          ],
+          plugins: [
+            'external-helpers',
+          ]
+        })
+      ]
+    }, 'iife'))
+    .pipe(uglify())
     .pipe(sourcemaps.write(''))
-    .pipe(gulp.dest('build/js/'));
+    .pipe(gulp.dest('build/js'));
 });
 
 gulp.task('test', function () {
   return gulp
-    .src(['js/**/*.test.js'], {read: false})
+    .src(['js/**/*.test.js'], { read: false })
     .pipe(mocha({
-        compilers: ['js:babel-register'],
-        reporter: 'spec'
+      compilers: ['js:babel-register'],
+      reporter: 'spec'
     }));
 });
 
